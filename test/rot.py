@@ -3,17 +3,15 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import *
 import numpy as np
 import pygame
-
-#class planet():
-#	def __intit__(self, size, dist, color):
-#		return
-#
-#	def render(self):
+import random
 
 class GLContext():
 	def __init__(self, screen):
 		self.screen = screen
 		self.aspect = screen.get_width()/screen.get_height()
+		self.rotX = 20
+		self.rotY = 30
+		self.rotZ = 35
 		gluPerspective(45.0, self.aspect, 0.1, 200.0)
 		return
 
@@ -26,6 +24,10 @@ class GLContext():
  					exit()
  		return
 
+	def ranNum(self):
+ 		return random.uniform(0, 1)
+
+
 
 	def display(self):
 	#Code goes here...
@@ -34,14 +36,16 @@ class GLContext():
 		glPushMatrix()
 		#glBegin(GL_QUADS)
 
-		glColor3f(1.0, 1.0, 0.0)
-		glTranslatef(0.0, 0.0, -20.0) #trasnlates scene -1.0 units in depth (away from the camera)
-		glRotatef(20.0, 1, 0, 0) #20deg rotation around the x-axis 
-		glRotatef(30.0, 0, 1, 0) #30deg rotation around the y-axis
-		glRotatef(40.0, 0, 0, 1) #49deg rotation around the z-axis
+		glColor3f(self.ranNum(), self.ranNum(), self.ranNum())
+		glTranslatef(0.0, 0.0, -5.0) #trasnlates scene -1.0 units in depth (away from the camera)
+		glRotatef(self.rotX, 1, 0, 0) #20deg rotation around the x-axis 
+		glRotatef(self.rotY, 0, 1, 0) #30deg rotation around the y-axis
+		glRotatef(self.rotZ, 0, 0, 1) 
 
-		glutWireSphere(2,20,20) 
-
+		glutWireCube(0.5) 
+		self.rotX += 1
+		self.rotY += 2
+		self.rotZ += .5
 		#glEnd()
 		glPopMatrix()
 		return
