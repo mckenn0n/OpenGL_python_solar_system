@@ -4,6 +4,27 @@ from OpenGL.GLUT import *
 import numpy as np
 import pygame
 
+class moon():
+	def __init__(self, size, dist, color, speed):
+		self.size = size
+		self.dist = dist
+		self.color = color
+		self.speed = speed/2
+		self.rotY = 35
+		return
+
+	def render(self):
+		glPushMatrix()
+		glColor3f(self.color[0], self.color[1], self.color[2])
+		#glRotatef(90.0, 1, 0, 0)  
+		glRotatef(self.rotY, 0, 1, 0) 
+		#glRotatef(35.0, 0, 0, 1) 
+		glTranslatef(0.0, 0.0, self.dist) 
+		glutWireSphere(self.size,20,20)
+		self.rotY += self.speed
+		glPopMatrix()
+		return
+
 class planet():
 	def __init__(self, size, dist, color, speed, hasMoon):
 		self.moons = []
@@ -11,8 +32,10 @@ class planet():
 		self.dist = dist
 		self.color = color
 		self.speed = speed/2
-		self.rotZ = 35
+		self.rotY = 35
 		self.hasMoon = hasMoon
+		if self.hasMoon:
+			self.moons.append(moon(self.size/3, self.size + .2, (1, 1, 1), 1.2))
 		return
 
 	def render(self):
@@ -20,11 +43,13 @@ class planet():
 		glPushMatrix()
 		glColor3f(self.color[0], self.color[1], self.color[2])
 		glRotatef(90.0, 1, 0, 0)  
-		glRotatef(self.rotZ, 0, 1, 0) 
+		glRotatef(self.rotY, 0, 1, 0) 
 		glRotatef(35.0, 0, 0, 1) 
 		glTranslatef(0.0, 0.0, self.dist) 
 		glutWireSphere(self.size,20,20) 
-		self.rotZ += self.speed
+		self.rotY += self.speed
+		for m in self.moons:
+			m.render();
 		glPopMatrix()	
 		
 		return
