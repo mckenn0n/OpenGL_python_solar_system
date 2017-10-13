@@ -3,6 +3,64 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import *
 import numpy as np
 import pygame
+import random
+
+def ranNum():
+ 	return random.uniform(0, 1)
+class Cube():
+	def __init__(self, size, translate, speed_list_XYZ):
+		self.size = size
+		self.translate = translate
+		self.rotX = 0
+		self.rotY = 0
+		self.rotZ = 0
+		self.speed_list_XYZ = speed_list_XYZ
+		return
+
+	def render(self):
+		glPushMatrix()
+
+		glColor3f(ranNum(), ranNum(), ranNum())
+		glTranslatef(self.translate[0], self.translate[1], self.translate[2]) 
+		glRotatef(self.rotX, 1, 0, 0)  
+		glRotatef(self.rotY, 0, 1, 0) 
+		glRotatef(self.rotZ, 0, 0, 1) 
+		# glutWireSphere(self.size,self.s1,self.s2)
+		glutWireCube(self.size) 
+		self.rotX += self.speed_list_XYZ[0] #3
+		self.rotY += self.speed_list_XYZ[1] #2
+		self.rotZ += self.speed_list_XYZ[2] #1.5
+		glPopMatrix()
+		return
+
+class Sphere():
+	def __init__(self, size, translate, s1, s2, speed_list_XYZ):
+		self.size = size
+		self.translate = translate
+		self.s1 = s1
+		self.s2 = s2
+		self.rotX = 0
+		self.rotY = 0
+		self.rotZ = 0
+		self.speed_list_XYZ = speed_list_XYZ
+		return
+
+	def render(self):
+		glPushMatrix()
+
+		glColor3f(ranNum(), ranNum(), ranNum())
+		glTranslatef(self.translate[0], self.translate[1], self.translate[2]) 
+		glRotatef(self.rotX, 1, 0, 0)  
+		glRotatef(self.rotY, 0, 1, 0) 
+		glRotatef(self.rotZ, 0, 0, 1) 
+		glutWireSphere(self.size,self.s1,self.s2)
+		# glutWireCube(self.size) 
+		self.rotX += self.speed_list_XYZ[0] #3
+		self.rotY += self.speed_list_XYZ[1] #2
+		self.rotZ += self.speed_list_XYZ[2] #1.5
+		glPopMatrix()
+		return
+
 
 class moon():
 	def __init__(self, size, dist, color, speed):
@@ -58,6 +116,8 @@ class GLContext():
 	def __init__(self, screen):
 		glEnable(GL_DEPTH_TEST)
 		glDepthFunc(GL_LEQUAL)
+		self.cubes = []
+		self.spheres = []
 		self.screen = screen
 		self.aspect = screen.get_width()/screen.get_height()
 		self.planets = []
@@ -73,6 +133,12 @@ class GLContext():
 		self.planets.append(planet(.4, 14, (0, 0.807843, 0.819608), 1.2, False))
 		self.planets.append(planet(.4, 16, (0, 0, 0.501961), 1.15, False))
 		self.planets.append(planet(.08, 19, (0, 1, 1), 1.1, False))
+		self.cubes.append(Cube(.5, (0, 10, 5), (3, 2, 1.5)))
+		self.spheres.append(Sphere(.25, (0, 10, 5), 20, 20, (3, 2, 1.5)));
+		self.spheres.append(Sphere(.75, (0, 10, 5), 20, 2, (2, 3, 10)));
+		self.spheres.append(Sphere(1.75, (0, 10, 5), 3, 3, (1, 1, 1)));
+		self.spheres.append(Sphere(1, (0, 10, 5), 20, 20, (0, 1, 0)));
+		self.cubes.append(Cube(1.5, (0, 10, 5), (1, 0, 0)))
 		return
 
 	def check_events(self):
@@ -99,6 +165,11 @@ class GLContext():
 		self.rot -= .5
 		for p in self.planets:
 			p.render()
+		for c in self.cubes:
+			c.render()
+		for s in self.spheres:
+			s.render()
+
 		#glEnd()
 		glPopMatrix()
 
