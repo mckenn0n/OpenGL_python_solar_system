@@ -8,9 +8,9 @@ import random
 def ranNum():
  	return random.uniform(0, 1)
 class Cube():
-	def __init__(self, size, dist, speed_list_XYZ):
+	def __init__(self, size, translate, speed_list_XYZ):
 		self.size = size
-		self.dist = dist
+		self.translate = translate
 		self.rotX = 0
 		self.rotY = 0
 		self.rotZ = 0
@@ -21,7 +21,7 @@ class Cube():
 		glPushMatrix()
 
 		glColor3f(ranNum(), ranNum(), ranNum())
-		glTranslatef(0.0, 0.0, self.dist) 
+		glTranslatef(self.translate[0], self.translate[1], self.translate[2]) 
 		glRotatef(self.rotX, 1, 0, 0)  
 		glRotatef(self.rotY, 0, 1, 0) 
 		glRotatef(self.rotZ, 0, 0, 1) 
@@ -34,9 +34,9 @@ class Cube():
 		return
 
 class Sphere():
-	def __init__(self, size, dist, s1, s2, speed_list_XYZ):
+	def __init__(self, size, translate, s1, s2, speed_list_XYZ):
 		self.size = size
-		self.dist = dist
+		self.translate = translate
 		self.s1 = s1
 		self.s2 = s2
 		self.rotX = 0
@@ -49,7 +49,7 @@ class Sphere():
 		glPushMatrix()
 
 		glColor3f(ranNum(), ranNum(), ranNum())
-		glTranslatef(0.0, 0.0, self.dist) 
+		glTranslatef(self.translate[0], self.translate[1], self.translate[2]) 
 		glRotatef(self.rotX, 1, 0, 0)  
 		glRotatef(self.rotY, 0, 1, 0) 
 		glRotatef(self.rotZ, 0, 0, 1) 
@@ -71,12 +71,12 @@ class GLContext():
 		self.rotY = 30
 		self.rotZ = 35
 		gluPerspective(45.0, self.aspect, 0.1, 200.0)
-		self.cubes.append(Cube(.5, 0, (3, 2, 1.5)))
-		self.spheres.append(Sphere(.25, 0, 20, 20, (3, 2, 1.5)));
-		self.spheres.append(Sphere(.75, 0, 20, 2, (2, 3, 10)));
-		self.spheres.append(Sphere(1.75, 0, 3, 3, (1, 1, 1)));
-		self.spheres.append(Sphere(1, 0, 20, 20, (0, 1, 0)));
-		self.cubes.append(Cube(1.5, 0, (1, 0, 0)))
+		self.cubes.append(Cube(.5, (0, 0, 0), (3, 2, 1.5)))
+		self.spheres.append(Sphere(.25, (0, 0, 0), 20, 20, (3, 2, 1.5)));
+		self.spheres.append(Sphere(.75, (0, 0, 0), 20, 2, (2, 3, 10)));
+		self.spheres.append(Sphere(1.75, (0, 0, 0), 3, 3, (1, 1, 1)));
+		self.spheres.append(Sphere(1, (0, 0, 0), 20, 20, (0, 1, 0)));
+		self.cubes.append(Cube(1.5, (0, 0, 0), (1, 0, 0)))
 		return
 
 	def check_events(self):
