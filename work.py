@@ -9,7 +9,7 @@ class moon():
 		self.size = size
 		self.dist = dist
 		self.color = color
-		self.speed = speed/2
+		self.speed = speed
 		self.rotY = 35
 		return
 
@@ -71,11 +71,11 @@ class GLContext():
 		self.planets.append(planet(.8, 10, (0.823529, 0.705882, 0.54902), 1.5, False))
 		self.planets.append(planet(.5, 12, (.85, 0.643137, 0.12549), 1.3, False))
 		self.planets.append(planet(.4, 14, (0, 0.807843, 0.819608), 1.2, False))
-		self.planets.append(planet(.4, 16, (0, 0, 0.501961), 1.1, False))
+		self.planets.append(planet(.4, 16, (0, 0, 0.501961), 1.15, False))
+		self.planets.append(planet(.08, 19, (0, 1, 1), 1.1, False))
 		return
 
 	def check_events(self):
-		#Code goes here...
  		for event in pygame.event.get():
  			if event.type == pygame.QUIT:
  				exit()
@@ -85,7 +85,6 @@ class GLContext():
 
 
 	def display(self):
-	#Code goes here...
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		glPushMatrix()
 		#glBegin(GL_QUADS)
