@@ -41,11 +41,11 @@ class GLContext():
 		glRotatef(self.rotX, 1, 0, 0) #20deg rotation around the x-axis 
 		glRotatef(self.rotY, 0, 1, 0) #30deg rotation around the y-axis
 		glRotatef(self.rotZ, 0, 0, 1) 
-
+		
 		glutWireCube(0.5) 
-		self.rotX += 1
+		self.rotX += 3
 		self.rotY += 2
-		self.rotZ += .5
+		self.rotZ += 1.5
 		#glEnd()
 		glPopMatrix()
 		return
