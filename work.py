@@ -135,10 +135,11 @@ class GLContext():
 		self.planets.append(planet(.08, 19, (0, 1, 1), 1.1, False))
 		self.cubes.append(Cube(.5, (10, 10, 5), (3, 2, 1.5)))
 		self.spheres.append(Sphere(.25, (10, 10, 5), 20, 20, (3, 2, 1.5)));
-		self.spheres.append(Sphere(.75, (10, 10, 5), 20, 2, (2, 3, 10)));
+		self.spheres.append(Sphere(.75, (10, 10, 5), 20, 2, (4, 5, 10)));
 		self.spheres.append(Sphere(1.75, (10, 10, 5), 3, 3, (1, 1, 1)));
 		self.spheres.append(Sphere(1, (10, 10, 5), 20, 20, (0, 1, 0)));
 		self.cubes.append(Cube(1.5, (10, 10, 5), (1, 0, 0)))
+		self.spheres.append(Sphere(2, (10, 10, 5), 3, 2, (1, 1, 1)));
 		return
 
 	def check_events(self):
