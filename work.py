@@ -90,7 +90,7 @@ class planet():
 		self.dist = dist
 		self.color = color
 		self.speed = speed/2
-		self.rotY = 35
+		self.rotY = 160
 		self.hasMoon = hasMoon
 		if self.hasMoon:
 			self.moons.append(moon(self.size/3, self.size + .2, (1, 1, 1), 1.2))
