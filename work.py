@@ -4,9 +4,30 @@ from OpenGL.GLUT import *
 import numpy as np
 import pygame
 import random
-
+count = 0
 def ranNum():
  	return random.uniform(0, 1)
+
+class Ring():#self.moons.append(Ring(self.size + 0.1, self.size + 0.3, 20, 20, (1, 1, 1), 1.2))
+	def __init__(self, inner_r, outer_r, n, rings, color, rotZ):
+		self.inner_r = inner_r
+		self.outer_r = outer_r
+		self.n = n
+		self.rings = rings
+		self.color = color
+		self.rotZ = rotZ
+		return
+
+	def render(self):
+		glPushMatrix()
+		glColor3f(self.color[0], self.color[1], self.color[2])
+		# glRotatef(45.0, 1, 0, 0)  
+		# glRotatef(45, 0, 1, 0) 
+		glRotatef(self.rotZ, 1, 0, 0) 
+		glutWireTorus(self.inner_r, self.outer_r, self.n, self.rings)
+		glPopMatrix()
+		return
+
 class Cube():
 	def __init__(self, size, translate, speed_list_XYZ):
 		self.size = size
@@ -84,14 +105,24 @@ class moon():
 		return
 
 class planet():
-	def __init__(self, size, dist, color, speed, hasMoon):
+	def __init__(self, size, dist, color, speed, hasMoon, hasRing, c):
 		self.moons = []
+		self.rings = []
 		self.size = size
+		self.c = c
 		self.dist = dist
 		self.color = color
 		self.speed = speed/2
 		self.rotY = 160
 		self.hasMoon = hasMoon
+		self.hasRing = hasRing
+		if self.hasRing:
+			if self.c == 0:
+				self.moons.append(Ring(self.size -.3, self.size + .5, 2, 20, (1, 1, 1), 90))
+			if self.c == 1:
+				self.moons.append(Ring(self.size -.3, self.size + .5, 2, 20, (0, 0.807843, 0.819608), 0))
+
+
 		if self.hasMoon:
 			self.moons.append(moon(self.size/3, self.size + .2, (1, 1, 1), 1.2))
 		return
@@ -124,15 +155,15 @@ class GLContext():
 		gluPerspective(45.0, self.aspect, 0.1, 200.0)
 		self.rot = 0
 		self.rot2 = 45
-		self.planets.append(planet(.2, 4, (1.0, 0.0, 0.0), 5, False))
-		self.planets.append(planet(.3, 5, (1, 0.647059, 0), 4, False))
-		self.planets.append(planet(.3, 6.2, (0, 0, 0.8), 3.5, True))
-		self.planets.append(planet(.25, 7.5, (0.545098, 0.0, 0.0), 2.5, False))
-		self.planets.append(planet(.8, 10, (0.823529, 0.705882, 0.54902), 1.5, False))
-		self.planets.append(planet(.5, 12, (.85, 0.643137, 0.12549), 1.3, False))
-		self.planets.append(planet(.4, 14, (0, 0.807843, 0.819608), 1.2, False))
-		self.planets.append(planet(.4, 16, (0, 0, 0.501961), 1.15, False))
-		self.planets.append(planet(.08, 19, (0, 1, 1), 1.1, False))
+		self.planets.append(planet(.2, 4, (0.7, 0.6, 1.0), 5, False, False, -1))
+		self.planets.append(planet(.3, 5, (1, 0.647059, 0), 4, False, False, -1))
+		self.planets.append(planet(.3, 6.2, (0, 0, 0.8), 3.5, True, False, -1))
+		self.planets.append(planet(.25, 7.5, (0.545098, 0.0, 0.0), 2.5, False, False, -1))
+		self.planets.append(planet(.8, 10, (0.823529, 0.705882, 0.54902), 1.5, False, False, -1))
+		self.planets.append(planet(.5, 12, (.85, 0.643137, 0.12549), 1.3, False, True, 0))
+		self.planets.append(planet(.4, 14, (0, 0.807843, 0.819608), 1.2, False, True, 1))
+		self.planets.append(planet(.4, 16, (0, 0, 0.501961), 1.15, False, False, -1))
+		self.planets.append(planet(.08, 19, (0, 1, 1), 1.1, False, False, -1))
 		self.cubes.append(Cube(.5, (10, 10, 5), (3, 2, 1.5)))
 		self.spheres.append(Sphere(.25, (10, 10, 5), 20, 20, (3, 2, 1.5)));
 		self.spheres.append(Sphere(.75, (10, 10, 5), 20, 2, (4, 5, 10)));
@@ -193,4 +224,3 @@ if __name__ == '__main__':
 		main()
 	finally:
 		pygame.quit()
-
