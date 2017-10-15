@@ -1,3 +1,4 @@
+from __future__ import division #Added so that work.py will run with Python 2.7
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
