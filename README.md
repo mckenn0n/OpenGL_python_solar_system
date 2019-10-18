@@ -13,4 +13,6 @@ Python 3
 
         python3 work.py
 
+### Test Directory
+
 The test directory has a small number of python files that were used to test segments of work.py.
